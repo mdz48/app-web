@@ -74,7 +74,7 @@ export class CalendarComponent {
   openForm(day: number) {
     this.selectedDay = day;
     this.showForm = true;
-    this.selectedTareas = [];
+    this.selectedTareas = [...this.tareasSeleccionadas]; // Cargar tareas seleccionadas al abrir el formulario
   }
 
   saveProgress() {
@@ -87,6 +87,21 @@ export class CalendarComponent {
       };
       localStorage.setItem(key, JSON.stringify(progress));
       this.showForm = false; // Cerrar el formulario después de guardar
+    }
+  }
+
+  // Método para manejar el cambio en las tareas seleccionadas
+  onTareaChange(tarea: string, event: Event) {
+    const input = event.target as HTMLInputElement;
+    const isChecked = input.checked;
+
+    if (isChecked) {
+      this.selectedTareas.push(tarea);
+    } else {
+      const index = this.selectedTareas.indexOf(tarea);
+      if (index > -1) {
+        this.selectedTareas.splice(index, 1);
+      }
     }
   }
 

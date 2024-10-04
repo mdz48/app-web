@@ -1,42 +1,33 @@
 <div class="calendar">
-    <!-- Header del calendario con botones para cambiar el mes -->
-    <div class="calendar-header">
-      <button class="month-btn" (click)="previousMonth()">Anterior</button>
-      <h2>{{ monthNames[currentMonth] }} {{ currentYear }}</h2>
-      <button class="month-btn" (click)="nextMonth()">Siguiente</button>
-    </div>
-  
-    <!-- Días de la semana -->
-    <div class="calendar-weekdays">
-      <div *ngFor="let day of weekDays" class="weekday">{{ day }}</div>
-    </div>
-  
-    <!-- Grid del calendario con días y espacios en blanco -->
-    <div class="calendar-grid">
-      <!-- Días en blanco al inicio del mes -->
-      <div *ngFor="let blank of blankDays" class="calendar-day blank"></div>
-  
-      <!-- Días del mes -->
-      <div *ngFor="let day of daysInMonth" class="calendar-day" [class.progress-logged]="isProgressLogged(day)">
-        <div class="day-number">{{ day }}</div>
-        <button class="progress-btn" (click)="openForm(day)">Registrar Progreso</button>
-      </div>
-    </div>
-  
-    <!-- Formulario emergente para registrar tareas -->
-    <div *ngIf="showForm" class="progress-form">
-      <h3>Registrar progreso para el día {{ selectedDay }}/{{ currentMonth + 1 }}/{{ currentYear }}</h3>
-      
-      <!-- Lista de tareas previamente seleccionadas -->
-      <div *ngFor="let tarea of tareasSeleccionadas" class="task-checkbox">
-        <label>
-          <input type="checkbox" [(ngModel)]="selectedTareas" [value]="tarea">
-          {{ tarea }}
-        </label>
-      </div>
-  
-      <!-- Botón para guardar el progreso -->
-      <button class="save-btn" (click)="saveProgress()">Guardar</button>
+  <div class="calendar-header">
+    <button class="month-btn" (click)="previousMonth()">Anterior</button>
+    <h2>{{ monthNames[currentMonth] }} {{ currentYear }}</h2>
+    <button class="month-btn" (click)="nextMonth()">Siguiente</button>
+  </div>
+
+  <div class="calendar-weekdays">
+    <div *ngFor="let day of weekDays" class="weekday">{{ day }}</div>
+  </div>
+
+  <div class="calendar-grid">
+    <div *ngFor="let blank of blankDays" class="calendar-day blank"></div>
+
+    <div *ngFor="let day of daysInMonth" class="calendar-day" [class.progress-logged]="isProgressLogged(day)">
+      <div class="day-number">{{ day }}</div>
+      <button class="progress-btn" (click)="openForm(day)">Registrar Progreso</button>
     </div>
   </div>
-  
+
+  <div *ngIf="showForm" class="progress-form">
+    <h3>Registrar progreso para el día {{ selectedDay }}/{{ currentMonth + 1 }}/{{ currentYear }}</h3>
+    
+    <div *ngFor="let tarea of tareasSeleccionadas" class="task-checkbox">
+      <label>
+        <input type="checkbox" [checked]="selectedTareas.includes(tarea)" (change)="onTareaChange(tarea, $event)">
+        {{ tarea }}
+      </label>
+    </div>
+
+    <button class="save-btn" (click)="saveProgress()">Guardar</button>
+  </div>
+</div>

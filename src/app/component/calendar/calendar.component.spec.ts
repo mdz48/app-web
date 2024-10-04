@@ -1,23 +1,97 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import { CalendarComponent } from './calendar.component';
+@Component({
+  selector: 'app-calendar',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './calendar.component.html',
+  styleUrls: ['./calendar.component.css']
+})
+export class CalendarComponent {
+  currentMonth: number = new Date().getMonth();
+  currentYear: number = new Date().getFullYear();
+  daysInMonth: number[] = [];
+  blankDays: number[] = [];
+  selectedDay: number | null = null;
+  tareasSeleccionadas: string[] = [];  // Tareas seleccionadas por el usuario activo
+  selectedTareas: string[] = [];
+  showForm: boolean = false;
+  activeUser: string | null = localStorage.getItem('usuarioActivo');
 
-describe('CalendarComponent', () => {
-  let component: CalendarComponent;
-  let fixture: ComponentFixture<CalendarComponent>;
+  monthNames: string[] = [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+  ];
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [CalendarComponent]
-    })
-    .compileComponents();
+  weekDays: string[] = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 
-    fixture = TestBed.createComponent(CalendarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  constructor() {
+    this.loadSelectedTasks();
+    this.generateCalendar();
+  }
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  // Cargar las tareas seleccionadas del localStorage
+  loadSelectedTasks() {
+    const storedData = localStorage.getItem('seleccionados');
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      if (parsedData.usuario === this.activeUser) {
+        this.tareasSeleccionadas = parsedData.tareas;
+      }
+    }
+  }
+
+  generateCalendar() {
+    const daysInCurrentMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
+    const firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
+    const adjustedFirstDay = (firstDayOfMonth === 0) ? 6 : firstDayOfMonth - 1;
+    this.blankDays = Array(adjustedFirstDay).fill(0);
+    this.daysInMonth = Array(daysInCurrentMonth).fill(0).map((_, i) => i + 1);
+  }
+
+  previousMonth() {
+    if (this.currentMonth === 0) {
+      this.currentMonth = 11;
+      this.currentYear--;
+    } else {
+      this.currentMonth--;
+    }
+    this.generateCalendar();
+  }
+
+  nextMonth() {
+    if (this.currentMonth === 11) {
+      this.currentMonth = 0;
+      this.currentYear++;
+    } else {
+      this.currentMonth++;
+    }
+    this.generateCalendar();
+  }
+
+  openForm(day: number) {
+    this.selectedDay = day;
+    this.showForm = true;
+    this.selectedTareas = [];
+  }
+
+  saveProgress() {
+    if (this.activeUser && this.selectedDay) {
+      const key = `${this.currentYear}-${this.currentMonth + 1}-${this.selectedDay}`;
+      const progress = {
+        usuario: this.activeUser,
+        fecha: key,
+        tareas: this.selectedTareas
+      };
+      localStorage.setItem(key, JSON.stringify(progress));
+      this.showForm = false; // Cerrar el formulario después de guardar
+    }
+  }
+
+  isProgressLogged(day: number): boolean {
+    const key = `${this.currentYear}-${this.currentMonth + 1}-${day}`;
+    return !!localStorage.getItem(key);
+  }
+}
