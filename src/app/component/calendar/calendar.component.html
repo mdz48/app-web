@@ -14,7 +14,9 @@
 
     <div *ngFor="let day of daysInMonth" class="calendar-day" [class.progress-logged]="isProgressLogged(day)">
       <div class="day-number">{{ day }}</div>
-      <button class="progress-btn" (click)="openForm(day)">Registrar Progreso</button>
+      <button *ngIf="isToday(day) && !isProgressLogged(day)" class="progress-btn" (click)="openForm(day)">
+        Registrar Progreso
+      </button>
     </div>
   </div>
 
@@ -27,7 +29,22 @@
         {{ tarea }}
       </label>
     </div>
-
+  
     <button class="save-btn" (click)="saveProgress()">Guardar</button>
   </div>
-</div>
+  <div class="estadisticas">
+    <h3>Estadísticas de Progreso</h3>
+  
+    <p><strong>Racha más larga:</strong> {{ userStats?.rachaActual || 0 }} días</p>
+    
+    <p *ngIf="userStats?.diaMaxTareas !== 'Sin registro'">
+      <strong>Día con más tareas completadas:</strong> {{ userStats?.diaMaxTareas }} con {{ mostCompletedTasks?.count }} tareas
+    </p>
+    <p *ngIf="userStats?.diaMinTareas !== 'Sin registro'">
+      <strong>Día con menos tareas completadas:</strong> {{ userStats?.diaMinTareas }} con {{ leastCompletedTasks?.count }} tareas
+    </p>
+  </div>
+  <div class="tareas-container">
+    <app-card *ngFor="let tarea of tareasSeleccionadas" [tarea]="tarea"></app-card>
+  </div>
+  
