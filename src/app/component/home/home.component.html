@@ -1,0 +1,27 @@
+<main>
+    <section>
+      <div id="hero-box">
+        <h1>Administra mejor tu tiempo con nuestra ayuda, cumple con tus objetivos.</h1>
+        <h3>Te ofrecemos las mejores herramientas más fáciles de entender y utilizar para que administres mejor tu tiempo.</h3>
+      </div>
+      <div id="information-box">
+        <h1>Selecciona tus hábitos</h1>
+  
+        <div *ngFor="let tarea of tareas">
+          <label>
+            <input 
+              type="checkbox" 
+              [value]="tarea" 
+              (change)="onCheckboxChange($event)" 
+            />
+            {{ tarea }}
+          </label>
+        </div>
+  
+        <p>Seleccionados: {{ seleccionados }}</p>
+  
+        <button (click)="guardarSeleccion()">Comenzar</button>
+      </div>
+    </section>
+  </main>
+  
