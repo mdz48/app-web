@@ -1,0 +1,80 @@
+.calendar {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .month-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .calendar-weekdays {
+    display: flex;
+    justify-content: space-around;
+    font-weight: bold;
+  }
+  
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+  
+  .calendar-day {
+    padding: 10px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .calendar-day.blank {
+    background-color: transparent;
+    border: none;
+  }
+  
+  .calendar-day .day-number {
+    font-weight: bold;
+  }
+  
+  .progress-logged {
+    background-color: #e0ffe0;
+  }
+  
+  .progress-btn {
+    margin-top: 5px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  .progress-form {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+  }
+  
+  .save-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .task-checkbox {
+    margin-bottom: 10px;
+  }
+  

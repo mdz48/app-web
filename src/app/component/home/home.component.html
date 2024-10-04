@@ -1,3 +1,4 @@
+<app-navbar/>
 <main>
     <section>
       <div id="hero-box">
@@ -6,22 +7,21 @@
       </div>
       <div id="information-box">
         <h1>Selecciona tus hábitos</h1>
-  
-        <div *ngFor="let tarea of tareas">
-          <label>
-            <input 
-              type="checkbox" 
-              [value]="tarea" 
-              (change)="onCheckboxChange($event)" 
-            />
-            {{ tarea }}
-          </label>
-        </div>
-  
-        <p>Seleccionados: {{ seleccionados }}</p>
-  
+        <div id="ilustration">
+          <div *ngFor="let tarea of tareas">
+            <label>
+              <input 
+                type="checkbox" 
+                [value]="tarea" 
+                (change)="onCheckboxChange($event)" 
+              />
+              {{ tarea }}
+            </label>
+          </div>
+        </div>  
         <button (click)="guardarSeleccion()">Comenzar</button>
       </div>
     </section>
   </main>
+  <app-footer/>
   
