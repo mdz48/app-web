@@ -1,3 +1,6 @@
+<div id="btn-box">
+  <button class="button-28" role="button" routerLink="/selection">Regresar</button>
+</div>
 <div class="calendar">
   <div class="calendar-header">
     <button class="month-btn" (click)="previousMonth()">Anterior</button>
@@ -15,7 +18,7 @@
     <div *ngFor="let day of daysInMonth" class="calendar-day" [class.progress-logged]="isProgressLogged(day)">
       <div class="day-number">{{ day }}</div>
       <button *ngIf="isToday(day) && !isProgressLogged(day)" class="progress-btn" (click)="openForm(day)">
-        Registrar Progreso
+        Registrar
       </button>
     </div>
   </div>
@@ -32,19 +35,26 @@
   
     <button class="save-btn" (click)="saveProgress()">Guardar</button>
   </div>
+
   <div class="estadisticas">
     <h3>Estadísticas de Progreso</h3>
   
     <p><strong>Racha más larga:</strong> {{ userStats?.rachaActual || 0 }} días</p>
     
-    <p *ngIf="userStats?.diaMaxTareas !== 'Sin registro'">
-      <strong>Día con más tareas completadas:</strong> {{ userStats?.diaMaxTareas }} con {{ mostCompletedTasks?.count }} tareas
+    <p *ngIf="mostCompletedTasks && mostCompletedTasks.count">
+      <strong>Día con más tareas completadas:</strong> {{ mostCompletedTasks.dayName }} con un promedio de {{ mostCompletedTasks.average }} tareas y un total de {{ mostCompletedTasks.count }} tareas
     </p>
-    <p *ngIf="userStats?.diaMinTareas !== 'Sin registro'">
-      <strong>Día con menos tareas completadas:</strong> {{ userStats?.diaMinTareas }} con {{ leastCompletedTasks?.count }} tareas
+
+    <p *ngIf="leastCompletedTasks && leastCompletedTasks.count">
+      <strong>Día con menos tareas completadas:</strong> {{ leastCompletedTasks.dayName }} con un promedio de {{ leastCompletedTasks.average }} tareas y un total de {{ leastCompletedTasks.count }} tareas
     </p>
   </div>
+
+</div>
+<section id="cards-box">
   <div class="tareas-container">
-    <app-card *ngFor="let tarea of tareasSeleccionadas" [tarea]="tarea"></app-card>
+    <div id="card" *ngFor="let tarea of tareasSeleccionadas" >
+      <app-card [tarea]="tarea"></app-card>
+    </div>
   </div>
-  
+</section>

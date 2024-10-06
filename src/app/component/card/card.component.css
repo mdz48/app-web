@@ -1,28 +1,23 @@
 .card {
-    background-color: #f4f4f8;
+    background-color: #282828;
+    /* width: 50%; */
     border-radius: 8px;
     padding: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin: 8px;
     text-align: center;
-    width: calc(50% - 16px); /* Hacer que cada tarjeta ocupe la mitad del contenedor */
-  }
-  
-  .task-image {
-    width: 100%;         /* Ajustar el ancho a 100% del contenedor de la tarjeta */
-    height: 150px;      /* Altura predefinida para la imagen */
-    object-fit: cover;  /* Recorta la imagen si es necesario para ajustarse */
-    border-radius: 8px 8px 0 0; /* Bordes redondeados en la parte superior */
   }
   
   .task-title {
+    color: white;
+
     font-size: 18px;
     font-weight: bold;
-    color: #333;
   }
   
   .task-details {
     font-size: 14px;
-    color: #666;
+    color: white;
+
   }
   

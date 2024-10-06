@@ -27,7 +27,6 @@ export class HomeComponent {
   }
 
   guardarSeleccion() {
-    // Guardar la selección en localStorage
     localStorage.setItem('seleccionados', JSON.stringify(this.seleccionados));
     alert('Selección guardada en localStorage');
   }

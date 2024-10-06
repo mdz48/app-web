@@ -29,7 +29,6 @@ export class RegisterComponent {
         password: this.password
       };
 
-      // Agregar el nuevo usuario a la lista y guardar en localStorage
       users.push(newUser);
       
       localStorage.setItem('users', JSON.stringify(users));

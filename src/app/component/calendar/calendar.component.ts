@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CardComponent } from '../card/card.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [CommonModule, FormsModule, CardComponent],
+  imports: [CommonModule, FormsModule, CardComponent, RouterLink],
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
@@ -60,71 +61,75 @@ export class CalendarComponent {
     let maxTasks = { date: "", count: 0, totalTasks: 0 };
     let minTasks = { date: "", count: Infinity, totalTasks: 0 };
 
-    const storedKeys = Object.keys(localStorage).filter(key => key !== "usuarioActivo");
+    const storedKeys = Object.keys(localStorage).filter(key => {
+        return key.match(/^\d{4}-\d{1,2}-\d{1,2}$/); 
+    });
 
-    storedKeys.forEach(key => {
-      const data = JSON.parse(localStorage.getItem(key) || '{}');
+    const sortedKeys = storedKeys.sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
 
-      if (data && data.usuario === this.activeUser) {
-        const tareasCount = data.tareas.length;
+    let lastDate: Date | null = null;
 
-        // Actualizar día con máximo de tareas completadas
-        if (tareasCount > maxTasks.count) {
-          maxTasks = { date: key, count: tareasCount, totalTasks: tareasCount };
+    sortedKeys.forEach(key => {
+        const data = JSON.parse(localStorage.getItem(key) || '{}');
+
+        if (data && data.usuario === this.activeUser) {
+            const tareasCount = data.tareas.length;
+
+            if (tareasCount > maxTasks.count) {
+                maxTasks = { date: key, count: tareasCount, totalTasks: tareasCount };
+            }
+
+            if (tareasCount < minTasks.count && tareasCount > 0) {
+                minTasks = { date: key, count: tareasCount, totalTasks: tareasCount };
+            }
+
+            const [year, month, day] = key.split('-').map(Number);
+            const registroFecha = new Date(year, month - 1, day);
+
+            if (lastDate) {
+                const diffInDays = (registroFecha.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24);
+
+                if (diffInDays === 1) {
+                    currentStreak++;
+                } else {
+                    currentStreak = 1; 
+                }
+            } else {
+                currentStreak = 1; 
+            }
+
+            lastDate = registroFecha; 
+            maxStreak = Math.max(maxStreak, currentStreak); 
         }
-
-        // Actualizar día con mínimo de tareas completadas, si tiene tareas
-        if (tareasCount < minTasks.count && tareasCount > 0) {
-          minTasks = { date: key, count: tareasCount, totalTasks: tareasCount };
-        }
-
-        // Actualizar racha si es consecutivo con el día anterior
-        const [year, month, day] = key.split('-').map(Number);
-        const registroFecha = new Date(year, month - 1, day);
-        const ayerFecha = new Date();
-        ayerFecha.setDate(ayerFecha.getDate() - 1);
-
-        if (registroFecha.getTime() === ayerFecha.getTime()) {
-          currentStreak++;
-          maxStreak = Math.max(maxStreak, currentStreak);
-        } else {
-          currentStreak = 1;
-        }
-      }
     });
 
     this.longestStreak = maxStreak;
 
-    // Convertir la fecha a nombre del día y calcular el promedio
     if (maxTasks.date) {
-      const [year, month, day] = maxTasks.date.split('-').map(Number);
-      const dateObj = !isNaN(year) && !isNaN(month) && !isNaN(day) 
-        ? new Date(year, month - 1, day) 
-        : null;
-      
-      const dayName = dateObj ? dateObj.toLocaleDateString('es-ES', { weekday: 'long' }) : 'Fecha inválida';
-      const average = (maxTasks.totalTasks / maxTasks.count).toFixed(1);
-      this.mostCompletedTasks = { date: maxTasks.date, dayName, average: parseFloat(average), count: maxTasks.count };
+        const [year, month, day] = maxTasks.date.split('-').map(Number);
+        const dateObj = new Date(year, month - 1, day);
+        const dayName = dateObj.toLocaleDateString('es-ES', { weekday: 'long' });
+        const average = (maxTasks.totalTasks / maxTasks.count).toFixed(1);
+        this.mostCompletedTasks = { date: maxTasks.date, dayName, average: parseFloat(average), count: maxTasks.count };
     }
 
-    if (minTasks.date) {
-      const [year, month, day] = minTasks.date.split('-').map(Number);
-      const dateObj = !isNaN(year) && !isNaN(month) && !isNaN(day) 
-        ? new Date(year, month - 1, day) 
-        : null;
-
-      const dayName = dateObj ? dateObj.toLocaleDateString('es-ES', { weekday: 'long' }) : 'Fecha inválida';
-      const average = (minTasks.totalTasks / minTasks.count).toFixed(1);
-      this.leastCompletedTasks = { date: minTasks.date, dayName, average: parseFloat(average), count: minTasks.count };
+    if (minTasks.date && minTasks.count !== Infinity) {
+        const [year, month, day] = minTasks.date.split('-').map(Number);
+        const dateObj = new Date(year, month - 1, day);
+        const dayName = dateObj.toLocaleDateString('es-ES', { weekday: 'long' });
+        const average = (minTasks.totalTasks / minTasks.count).toFixed(1);
+        this.leastCompletedTasks = { date: minTasks.date, dayName, average: parseFloat(average), count: minTasks.count };
+    } else {
+        this.leastCompletedTasks = { date: "Sin registro", dayName: "Sin registro", average: 0, count: 0 };
     }
 
-    // Guardar estadísticas en el objeto para mostrar en la interfaz
     this.userStats = {
-      rachaActual: maxStreak,
-      diaMaxTareas: this.mostCompletedTasks ? `${this.mostCompletedTasks.dayName} con un promedio de ${this.mostCompletedTasks.average} tareas` : "Sin registro",
-      diaMinTareas: this.leastCompletedTasks ? `${this.leastCompletedTasks.dayName} con un promedio de ${this.leastCompletedTasks.average} tareas` : "Sin registro"
+        rachaActual: maxStreak,
+        diaMaxTareas: this.mostCompletedTasks ? `${this.mostCompletedTasks.dayName} con un promedio de ${this.mostCompletedTasks.average} tareas` : "Sin registro",
+        diaMinTareas: this.leastCompletedTasks ? `${this.leastCompletedTasks.dayName} con un promedio de ${this.leastCompletedTasks.average} tareas` : "Sin registro"
     };
-  }
+}
+
 
   loadSelectedTasks() {
     const storedData = localStorage.getItem('seleccionados');
@@ -181,7 +186,7 @@ export class CalendarComponent {
         tareas: [...this.selectedTareas]
       };
       localStorage.setItem(key, JSON.stringify(progress));
-      this.showForm = false;
+      window.location.reload();
     }
   }
   
@@ -209,4 +214,5 @@ export class CalendarComponent {
   isToday(day: number): boolean {
     return day === this.today && this.currentMonth === new Date().getMonth() && this.currentYear === new Date().getFullYear();
   }
+
 }
