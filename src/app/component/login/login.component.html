@@ -5,22 +5,30 @@
           <h1>Iniciar Sesión</h1>
         </div>
         <div id="form">
-          <div id="field">
-            <label for="username">Usuario</label>
-            <input type="text" id="username" [(ngModel)]="username">
-          </div>
-          <div id="field">
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" [(ngModel)]="password">
-          </div>
+          <form [formGroup]="loginForm">
+            <div id="field">
+              <label for="username">Usuario</label>
+              <input type="text" formControlName="username" placeholder="Nombre de Usuario">
+              <p *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+                El campo de usuario es obligatorio.
+              </p>
+            </div>
+            <div id="field">
+              <label for="password">Contraseña</label>
+              <input type="password" formControlName="password" placeholder="Contraseña">
+              <p *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                El campo de contraseña es obligatorio.
+              </p>
+            </div>
+            <div id="btn-box">
+              <button class="button-28" type="button" (click)="login()">Iniciar Sesión</button>
+              <a href="register">No tengo cuenta</a>
+            </div>
+          </form>
         </div>
-        <div id="btn-box">
-          <button class="button-28" role="button" (click)="login()">Iniciar Sesión</button>
-          <a href="register">No tengo cuenta</a>
+        <div id="logo-box">
+          <img src="assets/logo.png" alt="logoimg">
         </div>
-      </div>
-      <div id="logo-box">
-        <img src="assets/logo.png" alt="logoimg">
       </div>
     </section>
   </main>

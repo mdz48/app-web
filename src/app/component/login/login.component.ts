@@ -1,39 +1,41 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router } from '@angular/router'; 
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  username: string = '';
-  password: string = '';
+  loginForm: FormGroup;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    this.loginForm = new FormGroup({
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required])
+    });
+  }
 
   login() {
-    // Validar si los campos están vacíos
-    if (this.username.trim() === '' || this.password.trim() === '') {
+    if (this.loginForm.invalid) {
       alert('Por favor, ingresa un nombre de usuario y contraseña.');
       return;
     }
 
-    // Obtener lista de usuarios del localStorage
     const users = JSON.parse(localStorage.getItem('users') || '[]');
 
-    // Verificar si el usuario y la contraseña coinciden
     const user = users.find((u: { username: string, password: string }) =>
-      u.username === this.username && u.password === this.password
+      u.username === this.loginForm.get('username')?.value && 
+      u.password === this.loginForm.get('password')?.value
     );
 
     if (user) {
-      // Establecer el usuario activo en el localStorage
+      localStorage.clear();
       localStorage.setItem('usuarioActivo', JSON.stringify(user.username));
-      this.router.navigate(['selection']);  // Redirigir al usuario
+      this.router.navigate(['selection']);
     } else {
       alert('Credenciales incorrectas.');
     }
