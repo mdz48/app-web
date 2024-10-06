@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CardComponent } from '../card/card.component';
 import { RouterLink } from '@angular/router';
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [CommonModule, FormsModule, CardComponent, RouterLink],
+  imports: [CommonModule, FormsModule, CardComponent, RouterLink, NavbarComponent],
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })

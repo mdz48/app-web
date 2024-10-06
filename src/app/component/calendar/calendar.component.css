@@ -62,14 +62,19 @@
 }
 
 .progress-form {
-  background-color: #f9f9f9;
+  background-color: #282828;
+  color: white;
   padding: 15px;
   border: 1px solid #ddd;
   margin-top: 20px;
 }
 
+#btn-box {
+  margin: 10px;
+}
 .save-btn {
-  background-color: #007bff;
+  background-color: #35aa51;
+  border-radius: 5px;
   color: white;
   border: none;
   padding: 8px;

@@ -30,7 +30,7 @@ main {
   #form {
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Añade un espacio entre los campos de entrada */
+    gap: 20px; 
   }
   
   #field {
@@ -40,7 +40,7 @@ main {
   
   input {
     border-radius: 7px;
-    padding: 10px; /* Añade padding para que se vea más espacioso */
+    padding: 10px; 
     width: 100%;
   }
   
@@ -61,7 +61,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px; /* Añade un espacio entre el botón y el enlace */
+    gap: 10px;
   }
   
   .button-28 {

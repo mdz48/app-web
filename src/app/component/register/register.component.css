@@ -1,125 +1,130 @@
 main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  section {
-    width: 50%;
-    padding: 30px;
-    border-radius: 15px;
-    background-color: #282828;
-    color: white;
-    display: flex;
-    justify-content: space-between; /* Distribuye el logo y el formulario */
-  }
-  
-  #form-box {
-    width: 50%;
-    margin: 0 auto; /* Centra horizontalmente el formulario */
-  }
-  
-  #logo-box {
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-  }
-  
-  #form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Añade un espacio entre los campos de entrada */
-  }
-  
-  #field {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  input {
-    border-radius: 7px;
-    padding: 10px; /* Añade padding para que se vea más espacioso */
-    width: 100%;
-  }
-  
-  a {
-    text-decoration: none;
-    color: white;
-    margin-top: 10px;
-    text-align: center;
-  }
-  
-  #btn-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px; /* Añade un espacio entre el botón y el enlace */
-  }
-  
-  .button-28 {
-    appearance: none;
-    background-color: white;
-    border: 2px solid #1A1A1A;
-    border-radius: 15px;
-    box-sizing: border-box;
-    color: #3B3B3B;
-    cursor: pointer;
-    display: inline-block;
-    font-family: 'Roobert', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: normal;
-    margin: 0;
-    min-height: 50px;
-    text-align: center;
-    text-decoration: none;
-    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-    user-select: none;
-    width: 70%; /* Botón más ancho */
-  }
-  
-  .button-28:hover {
-    color: #fff;
-    background-color: #1A1A1A;
-    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-    transform: translateY(-2px);
-  }
-  
-  .button-28:active {
-    box-shadow: none;
-    transform: translateY(0);
-  }
-  
-  .form__label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.2rem;
-    margin-left: 2rem;
-    margin-top: 0.7rem;
-    display: block;
-    transition: all 0.3s;
-    transform: translateY(0rem);
-  }
-  
-  .form__input {
-    font-family: 'Roboto', sans-serif;
-    color: #333;
-    font-size: 1.2rem;
-    margin: 0 auto;
-    padding: 1.5rem 2rem;
-    border-radius: 0.2rem;
-    background-color: rgb(255, 255, 255);
-    border: none;
-    width: 90%;
-    display: block;
-    border-bottom: 0.3rem solid transparent;
-    transition: all 0.3s;
-  }
-  
-  .form__input:placeholder-shown + .form__label {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-4rem);
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+section {
+  width: 50%;
+  padding: 30px;
+  border-radius: 15px;
+  background-color: #282828;
+  color: white;
+  display: flex;
+  justify-content: space-between; /* Distribuye el logo y el formulario */
+}
+
+#form-box {
+  width: 50%;
+  margin: 0 auto; /* Centra horizontalmente el formulario */
+}
+
+#logo-box {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+#form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+}
+
+#field {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  border-radius: 7px;
+  padding: 10px; 
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  margin-top: 10px;
+  text-align: center;
+}
+
+img {
+  max-width: 100%;
+  border-radius: 20%;
+  background-color: white;
+}
+
+#btn-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+}
+
+.button-28 {
+  appearance: none;
+  background-color: white;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #3B3B3B;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Roobert', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  width: 70%; /* Botón más ancho */
+}
+
+.button-28:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.button-28:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+.form__label {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2rem;
+  margin-left: 2rem;
+  margin-top: 0.7rem;
+  display: block;
+  transition: all 0.3s;
+  transform: translateY(0rem);
+}
+
+.form__input {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  font-size: 1.2rem;
+  margin: 0 auto;
+  padding: 1.5rem 2rem;
+  border-radius: 0.2rem;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  width: 90%;
+  display: block;
+  border-bottom: 0.3rem solid transparent;
+  transition: all 0.3s;
+}
+
+.form__input:placeholder-shown + .form__label {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4rem);
+}
