@@ -36,7 +36,7 @@ export class SelectionComponent {
         tareas: this.seleccionados,
       };
       localStorage.setItem('seleccionados', JSON.stringify(data));
-      alert('Selección guardada en localStorage con el usuario activo');
+      // alert('Selección guardada en localStorage con el usuario activo');
       this.router.navigate(['calendar']);
     } else {
       alert('No hay un usuario activo');
